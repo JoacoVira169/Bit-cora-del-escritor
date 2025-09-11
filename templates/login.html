@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write your thoughts</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+
+</head>
+<body>
+    <header class="header">
+        <img src="../static/img/logo.svg" alt="logo" width="30" height="30">
+        <ul class="main-list"></ul>
+    </header>
+
+    <main class="main-login">
+
+    <div class="welcome" id="welcome">
+    <span class="welcome__small">Bienvenido a</span>
+    <h1 class="welcome__brand" id="brand">WriteYourThoughts</h1>
+    </div>
+    <h2 class="instructions" >Inicie sesión o Registrese</h2>
+
+
+        {% block content %}
+        <form action="{{ url_for('login') }}" method="POST" class="login">
+            <div class="message">
+                <p class="message-container--error">{{error}}</p>
+            </div>
+
+            <label for="email">
+                <input type="email" class="form__input" name="email" id="email" placeholder="Introduzca su e-mail" required>
+            </label>
+            <label for="password">
+                <input type="password" class="form__input" name="password" id="password" placeholder="Introduzca su contraseña" required>
+            </label>
+
+            <button class="form__button">Iniciar sesión</button>
+            <a href="/reg" class="form__button reg__link">Registrarse</a>
+        </form>
+        {% endblock %}
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    
+
+</body>
+</html>
