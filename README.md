@@ -1,6 +1,6 @@
-# 🖊️ Bitácora del escritor – Escribí y creá memes al mismo tiempo 😂
+# 🖊️ WriteYourThoughts – Escribí y creá memes al mismo tiempo 😂
 
-Bienvenido a **Bitácora del escritor**, la app web donde la productividad se junta con la estupidez más gloriosa de internet.  
+Bienvenido a **WriteYour Thoughts**, la app web donde la productividad se junta con la estupidez más gloriosa de internet.  
 ¿Querías escribir tranquilo? Bueno... acá podés hacerlo mientras generás memes que probablemente nadie pidió.  
 
 ---
