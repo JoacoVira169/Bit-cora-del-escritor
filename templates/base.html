@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <title>Write your thoughts</title>
+  <title>{% block title %}Write your thoughts{% endblock %}</title>
 </head>
-<body>
+<body class="{% if settings.theme == 'dark' %}theme-dark{% else %}theme-light{% endif %}">
   <header class="header">
     <nav class="navbar">
       <div class="navbar-logo">
         <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/home.svg') }}" alt="Home"></a>
       </div>
 
-      <!-- ===== reemplazo: menú con botón Inicio ===== -->
       <div class="navbar-menu">
         <ul>
           <li><button class="menu-button" aria-controls="megaPanel_inicio" aria-expanded="false">Inicio</button></li>
@@ -26,58 +25,44 @@
         <!-- Mega panel para Inicio -->
         <div class="mega-panel" id="megaPanel_inicio" aria-hidden="true" role="region" aria-label="Panel de Inicio">
           <div class="mega-panel-inner">
-            <a href="{{ url_for('cards_list') }}" class="mega-btn">Mis tarjetas</a>
-            <a href="{{ url_for('config') }}" class="mega-btn">Configuración</a>
-            <a href="#" class="mega-btn">Ver Perfil</a>
+            <button class="mega-btn">Mis tarjetas</button>
+            <button class="mega-btn">Configuración</button>
+            <button class="mega-btn">Ver Perfil</button>
           </div>
         </div>
 
         <!-- Mega panel para Servicios -->
         <div class="mega-panel" id="megaPanel_servicios" aria-hidden="true" role="region" aria-label="Panel de Servicios">
           <div class="mega-panel-inner">
-            <a href="#" class="mega-btn">Servicio A</a>
-            <a href="#" class="mega-btn">Servicio B</a>
+            <button class="mega-btn">Servicio A</button>
+            <button class="mega-btn">Servicio B</button>
           </div>
         </div>
 
         <!-- Mega panel para Acerca de -->
         <div class="mega-panel" id="megaPanel_acercade" aria-hidden="true" role="region" aria-label="Panel de Acerca de">
           <div class="mega-panel-inner">
-            
+            <p>Información sobre la empresa o el proyecto.</p>
           </div>
         </div>
       </div>
+
+      <!-- botón de configuración (añádelo dentro del header, donde estén los enlaces de usuario) -->
+      <a href="{{ url_for('config') }}" class="config-button" title="Configuración" aria-label="Configuración">
+        <!-- icono de engranaje simple inline -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.5 1.65 1.65 0 0 0-1.82.33l-.06.06A2 2 0 1 1 2.3 16.88l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.09c.6 0 1.09-.4 1.5-1a1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.12 2.3l.06.06c.45.45 1 .6 1.5.6H9a1.65 1.65 0 0 0 1-1.5V1a2 2 0 1 1 4 0v.09c0 .6.4 1.09 1 1.5.5 0 1.05-.15 1.5-.6l.06-.06A2 2 0 1 1 21.7 7.12l-.06.06c-.45.45-.6 1-.6 1.5V9c0 .6.4 1.09 1 1.5H21a2 2 0 1 1 0 4h-.09c-.6 0-1.09.4-1.5 1z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
     </nav>
   </header>
   <main>
     {% block content %}
-    <h1 class="main__title">Mis entradas</h1>
-    <ul class="cards-list">
-      {% for el in cards %}
-      <li class="card">
-        <a class="card__link" href="/card/{{el.id}}">
-          <img class="card__img" src="{{ url_for('static', filename='img/documento.svg') }}" width="250" height="250" alt="img">
-          <div class="card__text">
-            <h2 class="card__title">{{el.title}}</h2>
-            <p class="card__subtitle">{{el.subtitle}}</p>
-          </div>
-        </a>
-      </li>
-      {% endfor %}
-      <li class="card card--creat">
-        <a class="creat__link" href="{{ url_for('create') }}" aria-label="Crear nueva entrada">
-          <svg class="creat__icon" width="96" height="96" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <rect width="24" height="24" rx="4" fill="none"></rect>
-            <path d="M12 5v14M5 12h14" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </li>
-    </ul>
     {% endblock %}
   </main>
   <footer></footer>
 
-  <!-- cargar el JS al final para que los selectores existan -->
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>

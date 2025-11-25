@@ -5,16 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thoughts library</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
     <header class="header">
-        <img src="../static/img/logo.svg" alt="logo" width="30" height="30">
+        <img src="{{ url_for('static', filename='img/documento.svg') }}" alt="logo" width="45" height="45">
         <ul class="main-list">
             <li class="list__item">
-              <a href="">
-                <img src="../static/img/login.svg" alt="login" width="20" height="20">
+              <a href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='img/circulo-cruzado.svg') }}" alt="back" width="45" height="45">
               </a>
             </li>
         </ul>
@@ -23,40 +23,45 @@
         {% block content %}
         <form action="{{ url_for('form_create') }}" method="post" class="creat-form">
             <div class="form__card">
-                <img class="card__img" src="../static/img/post_icon.png" width="250" height="250" alt="post_icon">
-                <div class="form__inputs">
-                    <label for="title">
-                        <input class="form__input" type="text" name="title" id="title"
-                               placeholder="Escriba el título de la entrada" required
-                               value="{{ title|default('', true) }}">
-                    </label>
-                    <label for="subtitle">
-                        <input class="form__input" type="text" name="subtitle" id="subtitle"
-                               placeholder="Escriba el título secundario" required
-                               value="{{ subtitle|default('', true) }}">
-                    </label>
-                </div>
-                <label for="text">
-                    <textarea class="form__text" name="text" id="text" cols="30" rows="10" required
-                              placeholder="Escribe algo de texto...">{{ text|default('', true) }}</textarea>
+                <!-- usar el SVG existente documento.svg -->
+                <img class="card__img" src="{{ url_for('static', filename='img/documento.svg') }}" alt="post icon" width="250" height="250">
+                 <div class="form__inputs">
+                     <label for="title">
+                         <input class="form__input" type="text" name="title" id="title"
+                                placeholder="Escriba el título de la entrada" required
+                                value="{{ title|default('', true) }}">
+                     </label>
+                     <label for="subtitle">
+                         <input class="form__input" type="text" name="subtitle" id="subtitle"
+                                placeholder="Escriba el título secundario" required
+                                value="{{ subtitle|default('', true) }}">
+                     </label>
+                 </div>
+                 <label for="text">
+                     <textarea class="form__text" name="text" id="text" cols="30" rows="10" required
+                               placeholder="Escribe algo de texto...">{{ text|default('', true) }}</textarea>
 
-                    <!-- Botón que envía el formulario a /voice por POST, sin validar required -->
-                    <button type="submit"
-                            class="help_button"
-                            formmethod="post"
-                            formaction="{{ url_for('voice') }}"
-                            formnovalidate
-                            name="action" value="voice">
-                        <i class="fa-solid fa-microphone-lines"></i>
-                        <span>Grabar</span>
-                    </button>
-                </label>
+                     <!-- Botón que envía el formulario a /voice por POST, sin validar required -->
+                     <button type="submit"
+                             class="help_button"
+                             formmethod="post"
+                             formaction="{{ url_for('voice') }}"
+                             formnovalidate
+                             name="action" value="voice">
+                         <i class="fa-solid fa-microphone-lines"></i>
+                         <span>Grabar</span>
+                     </button>
 
-                <!-- Botón normal que crea la entrada -->
-                <button class="form__button" type="submit">Crear</button>
+                     
+                 </label>
+
+                 <!-- Botón normal que crea la entrada -->
+                 <button class="form__button" type="submit">Crear</button>
             </div>
         </form>
         {% endblock %}
       </main>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>

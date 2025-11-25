@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar entrada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/logo.svg') }}" alt="logo" width="30" height="30"></a>
+        <ul class="main-list">
+            <li class="list__item">
+              <a href="{{ url_for('logout') }}">
+                <img src="{{ url_for('static', filename='img/login.svg') }}" alt="logout" width="20" height="20">
+              </a>
+            </li>
+        </ul>
+    </header>
+    <main>
+        <h1 class="main__title">Editar entrada</h1>
+        <form action="{{ url_for('edit', id=card.id) }}" method="post" class="creat-form">
+            <div class="form__card">
+                <div class="form__inputs">
+                    <label for="title">
+                        <input class="form__input" type="text" name="title" id="title"
+                               placeholder="Título de la entrada" required
+                               value="{{ card.title }}">
+                    </label>
+                    <label for="subtitle">
+                        <input class="form__input" type="text" name="subtitle" id="subtitle"
+                               placeholder="Subtítulo" required
+                               value="{{ card.subtitle }}">
+                    </label>
+                </div>
+                <label for="text">
+                    <textarea class="form__text" name="text" id="text" cols="30" rows="10" required
+                              placeholder="Texto de la entrada...">{{ card.text }}</textarea>
+                </label>
+                <button class="form__button" type="submit">Guardar cambios</button>
+                <a href="{{ url_for('card', id=card.id) }}" class="form__button" style="text-align:center; text-decoration:none;">Cancelar</a>
+            </div>
+        </form>
+    </main>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

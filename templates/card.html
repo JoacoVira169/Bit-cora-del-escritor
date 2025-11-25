@@ -33,8 +33,13 @@
           <a class="main__link" href="/index">Volver a las entradas</a>
         </li>
         <li>
+          <a class="main__link" href="{{ url_for('edit', id=card.id) }}" style="background-color: rgba(14, 165, 233, 0.2); border-color: #066896; color: #055174;">
+            Editar entrada
+          </a>
+        </li>
+        <li>
           <form action="{{ url_for('delete', id=card.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que querés eliminar esta entrada?')">  
-            <button class="main__link" type="submit" style="margin-top: 20px; background-color: rgba(255, 0, 0, 0.2); border-color: red; color: red;">
+            <button class="main__link" type="submit" style="margin-top: 0px; background-color: rgba(255, 0, 0, 0.2); border-color: red; color: red;">
               Eliminar entrada
             </button>
           </form>

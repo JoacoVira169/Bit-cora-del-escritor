@@ -1,3 +1,4 @@
+/* ...existing code... */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 body::-webkit-scrollbar {
     width: 12px;
@@ -13,9 +14,6 @@ body::-webkit-scrollbar {
     border: none;
   }
 
-
-
-
 body {
     margin: 0;
     padding: 0;
@@ -29,7 +27,6 @@ body {
 h1, h2, p {
     margin: 0;
 }
-
 
 img {
     object-fit: contain;
@@ -51,7 +48,7 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 2%;
+    padding: 0; /* moved padding to .navbar */
     margin-bottom: 30px;
 }
 
@@ -60,7 +57,6 @@ ul {
     align-items: center;
     gap: 20px;
 }
-
 
 .main__title {
     font-size: 40px;
@@ -85,7 +81,6 @@ ul {
     background: rgba(30, 41, 59, 0.4);
     border-radius: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-
 }
 
 .card__link {
@@ -113,7 +108,6 @@ ul {
 .card__subtitle {
     padding: 0 20px;
     text-align: center;
-
 }
 
 .card__img {
@@ -255,7 +249,6 @@ ul {
     background:  rgba(14, 165, 233, 1);
 }
 
-
 .main-login {
     display: flex;
     justify-content: center;
@@ -274,11 +267,9 @@ ul {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-
 .login label {
     width: 60%;
 }
-
 
 .reg__link {
     height: fit-content;
@@ -315,7 +306,6 @@ ul {
     color: rgba(255, 0, 0, 1);
     border: 1px solid rgba(255, 0, 0, 1);
     border-radius: 10px;
-    
 }
 
 .main__link--delete {
@@ -380,10 +370,6 @@ ul {
   line-height: 1.2; /* que no quede apretado */
 }
 
-
-
-
-
 .login {
   width: 100%;
   max-width: 400px;                  /* ancho máximo para pantallas grandes */
@@ -422,8 +408,6 @@ ul {
   /* forwards mantiene el último estado */
 }
 
-
-
 /* Tipos (puedes dejarlos como ya los tenías) */
 .welcome { text-align:center; margin-bottom:60px; }
 .welcome__small { display:block; font-size:20px; color:#94A3B8; margin-bottom:10px; }
@@ -441,3 +425,381 @@ ul {
     margin-bottom: 20px;
 }
 
+/* Ajuste: quitar padding del header para que el fondo del navbar pueda ocupar todo el ancho */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0; /* moved padding to .navbar */
+  margin-bottom: 30px;
+}
+
+/* Navbar: ocupa 100% y contiene el padding y el fondo */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0F172A; /* color de fondo de la barra */
+  padding: 12px 2%;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 50;
+  min-height: 56px; /* garantiza altura suficiente para cubrir los botones */
+}
+
+.navbar-logo img {
+  height: 40px;
+}
+
+/* Menú horizontal */
+.navbar-menu { display: flex; align-items: center; height: 100%; }
+.navbar-menu ul {
+  display: flex;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+.navbar-menu ul li {
+  list-style: none;
+  position: relative; /* necesario para posicionar el dropdown */
+}
+.navbar-menu ul li a {
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 8px 12px;     /* espacio clicable alrededor del texto */
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* Hover visual */
+.navbar-menu ul li a:hover,
+.navbar-menu ul li a:focus {
+  background: rgba(255,255,255,0.04);
+}
+
+/* ===== Dropdown & Mega Panel Cleanup ===== */
+
+/* Estilos para los botones del menú que activan los paneles */
+.menu-button {
+  background: transparent;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.menu-button:focus,
+.menu-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+/* Posicionamos la navbar como relativa para que el mega-panel se ancle a ella */
+.navbar {
+  position: relative;
+}
+
+/* Mega Panel: panel desplegable principal */
+.mega-panel {
+  display: none; /* Oculto por defecto */
+  position: absolute;
+  top: 100%;      /* Se posiciona justo debajo de la navbar */
+  left: 0;
+  width: 100%;
+  background: #fff;
+  color: #0F172A;
+  border-radius: 0 0 10px 10px; /* Bordes redondeados solo abajo */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 25px;
+  z-index: -1; /* Se asegura que esté detrás del contenido principal hasta que se active */
+
+  /* Animación de entrada/salida */
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  pointer-events: none; /* No se puede interactuar con él cuando está oculto */
+}
+
+/* Cuando el panel tiene la clase .open (añadida por JS) */
+.mega-panel.open {
+  display: block; /* Lo hacemos visible */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto; /* Se puede interactuar */
+  z-index: 40;  /* Lo traemos al frente */
+}
+
+/* Contenedor interno para centrar el contenido del panel */
+.mega-panel-inner {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  max-width: 1100px; /* Ancho máximo para el contenido */
+  margin: 0 auto; /* Centrado horizontal */
+}
+
+/* Estilo para los botones dentro del mega-panel */
+.mega-btn {
+    background-color: #96a7e400;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.mega-btn:hover {
+    background-color: #e9e9e9;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* ===== CARDS LIST APILADA (para ruta /cards_list) ===== */
+.cards-list.stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 5%;
+  max-width: 100%;
+  flex-wrap: nowrap;
+}
+
+.cards-list.stacked .card {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 12px;
+}
+
+.cards-list.stacked .card__link {
+  flex-direction: row;
+  gap: 16px;
+  padding: 0;
+  width: 100%;
+}
+
+.cards-list.stacked .card__img {
+  width: 120px;
+  height: 120px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.cards-list.stacked .card__text {
+  border-top: none;
+  border-left: 1px solid rgba(14, 165, 233, 0.3);
+  padding: 0 0 0 16px;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.cards-list.stacked .card__title {
+  padding: 0;
+  text-align: left;
+  font-size: 18px;
+}
+
+.cards-list.stacked .card__subtitle {
+  padding: 0;
+  text-align: left;
+  font-size: 14px;
+  color: #94A3B8;
+}
+
+.cards-list.stacked .card--creat {
+  height: 100px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .cards-list.stacked .card {
+    flex-direction: column;
+    padding: 12px;
+  }
+  .cards-list.stacked .card__link {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cards-list.stacked .card__text {
+    border-left: none;
+    border-top: 1px solid rgba(14, 165, 233, 0.3);
+    padding: 12px 0 0 0;
+  }
+  .cards-list.stacked .card__img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Reemplazo/ajuste para el botón crear (centrar el +) */
+.card--creat {
+  /* mantener tamaño y estilo igual que otras tarjetas */
+  width: 350px;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e6eef8 0%, #dbeafe 100%);
+  box-shadow: 0px 4px 10px rgba(14,165,233,0.12);
+  cursor: pointer;
+}
+
+/* hacer que el enlace ocupe todo y centre su contenido */
+.creat__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+/* SVG centrado y escalable */
+.creat__icon {
+  width: 64px;
+  height: 64px;
+  display: block;
+}
+
+/* mantener efecto hover similar al resto */
+.card--creat:hover {
+  box-shadow: 0px 6px 18px rgba(14,165,233,0.18);
+  transform: translateY(-4px);
+}
+
+/* Override para asegurar que el icono SVG se muestre y esté centrado */
+.creat__link {
+  background: transparent !important; /* anula posibles backgrounds previos */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  text-decoration: none !important;
+  color: inherit !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.creat__link img.creat__icon {
+  width: 96px;
+  height: 96px;
+  display: block;
+  object-fit: contain;
+}
+
+/* Config page */
+.config-page {
+  max-width: 920px;
+  margin: 28px auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.config-form { display: flex; flex-direction: column; gap: 18px; }
+.setting { background: rgba(255,255,255,0.03); padding: 14px; border-radius: 10px; }
+.setting__title { margin: 0 0 8px 0; font-size: 16px; color: #e6eef8; }
+.setting__row { display:flex; align-items:center; gap:12px; }
+.label-inline { min-width: 140px; color: #cbd5e1; }
+.input-select, .input-text { padding:8px 10px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); background: rgba(0,0,0,0.25); color: #fff; }
+.config-actions { display:flex; gap:12px; margin-top:6px; }
+.btn { padding: 8px 14px; border-radius:8px; text-decoration:none; display:inline-block; }
+.btn-primary { background:#0ea5e9; color:#012; border:none; }
+.btn-outline { background:transparent; color:#cfe8ff; border:1px solid rgba(255,255,255,0.06); padding:7px 12px; }
+
+/* Responsive */
+@media (max-width:720px) {
+  .setting__row { flex-direction: column; align-items:flex-start; }
+  .label-inline { min-width: auto; }
+}
+
+/* botón configuración en header */
+.config-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: #cfe8ff;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.04);
+  text-decoration: none;
+  margin-left: 10px; /* ajustar según layout del header */
+}
+.config-button:hover,
+.config-button:focus {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(14,165,233,0.25);
+  color: #0ea5e9;
+  outline: none;
+}
+
+/* asegúrate de que el SVG herede color */
+.config-button svg { display:block; color: inherit; stroke: currentColor; fill: none; }
+
+/* Tema: variables por defecto (claro) */
+:root {
+  --bg: #e6eef8;           /* fondo general */
+  --panel-bg: #ffffff;     /* paneles/cards */
+  --text: #0F172A;         /* texto principal */
+  --muted: #6b7280;        /* subtítulos */
+  --accent: #0ea5e9;       /* color destacado */
+  --card-shadow: rgba(2,6,23,0.06);
+}
+
+/* Tema oscuro */
+.theme-dark {
+  --bg: #0b1220;
+  --panel-bg: #0f172a;
+  --text: #e6eef8;
+  --muted: #94a3b8;
+  --accent: #0ea5e9;
+  --card-shadow: rgba(2,6,23,0.5);
+}
+
+/* Aplicar variables */
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background .18s ease, color .18s ease;
+}
+
+.header, .main, .footer, .card, .mega-panel {
+  background: var(--panel-bg);
+  color: var(--text);
+  box-shadow: 0 6px 18px var(--card-shadow);
+}
+
+/* botones/accent */
+.mega-btn, .btn-primary, .creat__icon path {
+  color: var(--text);
+}
+
+/* ejemplo: botones principales con acento */
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+}
+
+/* Ajustes adicionales: ajustar sombras/bordes para modo oscuro */
+.theme-dark .card, .theme-dark .mega-panel {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+}

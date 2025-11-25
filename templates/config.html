@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Configuración{% endblock %}
+
+{% block content %}
+<main class="config-page">
+  <h1 class="main__title">Configuración</h1>
+
+  <form method="post" class="config-form" id="configForm">
+    <section class="setting">
+      <h2 class="setting__title">Apariencia</h2>
+      <div class="setting__row">
+        <label class="label-inline">Tema:</label>
+        <select name="theme" class="input-select">
+          <option value="light" {% if settings.theme == 'light' %}selected{% endif %}>Claro</option>
+          <option value="dark"  {% if settings.theme == 'dark'  %}selected{% endif %}>Oscuro</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="setting">
+      <h2 class="setting__title">Notificaciones</h2>
+      <div class="setting__row">
+        <label class="label-inline">Recibir notificaciones:</label>
+        <input type="checkbox" name="notifications" value="1" {% if settings.notifications %}checked{% endif %}>
+      </div>
+    </section>
+
+    <section class="setting">
+      <h2 class="setting__title">Cuenta</h2>
+      <div class="setting__row">
+        <label class="label-inline">Usuario:</label>
+        <input type="text" name="display_name" class="input-text" value="{{ settings.display_name|default('') }}">
+      </div>
+    </section>
+
+    <div class="config-actions">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{{ url_for('index') }}" class="btn btn-outline">Cancelar</a>
+    </div>
+  </form>
+</main>
+{% endblock %}
